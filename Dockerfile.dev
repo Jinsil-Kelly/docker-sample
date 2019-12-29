@@ -1,12 +1,6 @@
 FROM node:alpine
-
 WORKDIR '/app'
-
-# install and cache app dependencies npm d
-COPY package.json /app/package.json
-
+COPY package.json .
 RUN npm install
-
 COPY . .
-
 CMD ["npm", "run", "start"]
