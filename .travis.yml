@@ -3,21 +3,21 @@ services:
   - docker
 
 before_install:
-  - docker build -t js/docker-react -f ./client/Dockerfile.dev ./client
+  - docker build -t $DOCKER_ID/docker-react -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true js/docker-react npm run test
+  - docker run -e CI=true $DOCKER_ID/docker-react npm run test
 
 after_success:
-  - docker build -t js/docker-client ./client
-  - docker build -t js/docker-nginx ./nginx
-  - docker build -t js/docker-server ./server
-  - docker build -t js/docker-worker ./worker
+  - docker build -t $DOCKER_ID/docker-client ./client
+  - docker build -t $DOCKER_ID/docker-nginx ./nginx
+  - docker build -t $DOCKER_ID/docker-server ./server
+  - docker build -t $DOCKER_ID/docker-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push -t js/docker-worker
-  - docker push -t js/docker-server
-  - docker push -t js/docker-client
-  - docker push -t js/docker-nginx
+  - docker push -t $DOCKER_ID/docker-worker
+  - docker push -t $DOCKER_ID/docker-server
+  - docker push -t $DOCKER_ID/docker-client
+  - docker push -t $DOCKER_ID/docker-nginx
 
 #deploy:
 #  provider: elasticbeanstalk
