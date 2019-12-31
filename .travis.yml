@@ -13,6 +13,11 @@ after_success:
   - docker build -t js/docker-nginx ./nginx
   - docker build -t js/docker-server ./server
   - docker build -t js/docker-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push -t js/docker-worker
+  - docker push -t js/docker-server
+  - docker push -t js/docker-client
+  - docker push -t js/docker-nginx
 
 #deploy:
 #  provider: elasticbeanstalk
