@@ -6,21 +6,23 @@ before_install:
   - docker build -t jinsil/docker-react -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true jinsil/docker-react npm run test
+  - docker run jinsil/docker-react npm test -- --coverage
+#  - docker run -e CI=true jinsil/docker-react npm run test
 
 after_success:
   - docker build -t jinsil/docker-client ./client
   - docker build -t jinsil/docker-nginx ./nginx
   - docker build -t jinsil/docker-server ./server
   - docker build -t jinsil/docker-worker ./worker
+  # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
   - docker push jinsil/docker-worker
   - docker push jinsil/docker-server
   - docker push jinsil/docker-client
   - docker push jinsil/docker-nginx
 
 deploy:
-  edge: true
   provider: elasticbeanstalk
   region: "us-east-1"
   app: "docker-sample"
