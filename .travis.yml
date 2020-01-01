@@ -3,10 +3,10 @@ services:
   - docker
 
 before_install:
-  - docker build -t js/docker-react -f ./client/Dockerfile.dev ./client
+  - docker build -t jinsil/docker-react -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true js/docker-react npm run test
+  - docker run -e CI=true jinsil/docker-react npm run test
 
 after_success:
   - docker build -t jinsil/docker-client ./client
@@ -14,19 +14,19 @@ after_success:
   - docker build -t jinsil/docker-server ./server
   - docker build -t jinsil/docker-worker ./worker
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push -t jinsil/docker-worker
-  - docker push -t jinsil/docker-server
-  - docker push -t jinsil/docker-client
-  - docker push -t jinsil/docker-nginx
+  - docker push jinsil/docker-worker
+  - docker push jinsil/docker-server
+  - docker push jinsil/docker-client
+  - docker push jinsil/docker-nginx
 
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-1"
-  app: "docker-sample"
-  env: "DockerSample-env"
-  bucket_name: "elasticbeanstalk-us-east-1-877778466778"
-  bucket_path: "docker-sample"
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
+#deploy:
+#  provider: elasticbeanstalk
+#  region: "us-east-1"
+#  app: "docker-sample"
+#  env: "DockerSample-env"
+#  bucket_name: "elasticbeanstalk-us-east-1-877778466778"
+#  bucket_path: "docker-sample"
+#  on:
+#    branch: master
+#  access_key_id: $AWS_ACCESS_KEY
+#  secret_access_key: $AWS_SECRET_KEY
