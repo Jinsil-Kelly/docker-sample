@@ -3,10 +3,10 @@ services:
   - docker
 
 before_install:
-  - docker build -t js/docker-react -f ./client/Dockerfile.dev ./client
+  - docker build -t jinsil/docker-react -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true js/docker-react npm run test
+  - docker run -e CI=true jinsil/docker-react npm run test
 
 after_success:
   - docker build -t jinsil/docker-client ./client
@@ -20,6 +20,7 @@ after_success:
   - docker push jinsil/docker-nginx
 
 deploy:
+  edge: true
   provider: elasticbeanstalk
   region: "us-east-1"
   app: "docker-sample"
