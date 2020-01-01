@@ -3,10 +3,10 @@ services:
   - docker
 
 before_install:
-  - docker build -t jinsil/docker-react -f ./client/Dockerfile.dev ./client
+  - docker build -t js/docker-react -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true jinsil/docker-react npm run test
+  - docker run -e CI=true js/docker-react npm run test
 
 after_success:
   - docker build -t jinsil/docker-client ./client
@@ -19,14 +19,14 @@ after_success:
   - docker push jinsil/docker-client
   - docker push jinsil/docker-nginx
 
-#deploy:
-#  provider: elasticbeanstalk
-#  region: "us-east-1"
-#  app: "docker-sample"
-#  env: "DockerSample-env"
-#  bucket_name: "elasticbeanstalk-us-east-1-877778466778"
-#  bucket_path: "docker-sample"
-#  on:
-#    branch: master
-#  access_key_id: $AWS_ACCESS_KEY
-#  secret_access_key: $AWS_SECRET_KEY
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "docker-sample"
+  env: "DockerSample-env"
+  bucket_name: "elasticbeanstalk-us-east-1-877778466778"
+  bucket_path: "docker-sample"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
