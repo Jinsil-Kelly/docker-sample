@@ -19,8 +19,6 @@ services:
       - /app/node_modules
       - ./server:/app
     environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
       - PGUSER=postgres
       - PGHOST=postgres
       - PGPASSWORD=postgres_password
@@ -39,3 +37,6 @@ services:
     volumes:
       - ./worker:/app
       - /app/node_modules
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
