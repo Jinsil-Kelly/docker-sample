@@ -22,7 +22,7 @@ after_success:
   - docker push jinsil/docker-nginx
 
 deploy:
-  edge: true
+#  edge: true
   provider: elasticbeanstalk
   region: "eu-west-2"
   app: "multi-docker"
