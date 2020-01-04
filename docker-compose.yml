@@ -21,7 +21,7 @@ services:
     environment:
       - PGUSER=postgres
       - PGHOST=postgres
-      - PGPASSWORD=postgres_password
+      - PGPASSWORD=Password123!
       - PGPORT=5432
       - REDIS_HOST=redis
       - REDIS_PORT=6379
